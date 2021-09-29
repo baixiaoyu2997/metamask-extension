@@ -1349,6 +1349,18 @@ export default class MetamaskController extends EventEmitter {
       trackMetaMetricsPage: metaMetricsController.trackPage.bind(
         metaMetricsController,
       ),
+      createEventFragment: nodeify(
+        metaMetricsController.createEventFragment,
+        metaMetricsController,
+      ),
+      updateEventFragment: nodeify(
+        metaMetricsController.updateEventFragment,
+        metaMetricsController,
+      ),
+      finalizeEventFragment: nodeify(
+        metaMetricsController.finalizeEventFragment,
+        metaMetricsController,
+      ),
 
       // approval controller
       resolvePendingApproval: approvalController.accept.bind(
