@@ -83,8 +83,10 @@
  * @typedef {Object} MetaMetricsEventFragment
  * @property {string} successEvent - The event name to fire when the fragment
  *  is closed in an affirmative action.
- * @property {string} failureEvent - The event name to fire when the fragment
+ * @property {string} [failureEvent] - The event name to fire when the fragment
  *  is closed with a rejection.
+ * @property {string} category - the event category to use for both the success
+ *  and failure events
  * @property {boolean} [persist] - Should this fragment be persisted in
  *  state and progressed after the extension is locked and unlocked.
  * @property {number} [timeout] - Time in seconds the event should be persisted

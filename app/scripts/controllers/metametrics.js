@@ -1,4 +1,4 @@
-import { merge, omit, omitBy, pickBy } from 'lodash';
+import { merge, omit, omitBy } from 'lodash';
 import { ObservableStore } from '@metamask/obs-store';
 import { bufferToHex, keccak } from 'ethereumjs-util';
 import { generateUUID } from 'pubnub';
@@ -84,7 +84,6 @@ export default class MetaMetricsController {
     this.version =
       environment === 'production' ? version : `${version}-${environment}`;
 
-    const persistedFragments = pickBy(initState?.fragments, 'persist');
     const abandonedFragments = omitBy(initState?.fragments, 'persist');
 
     this.store = new ObservableStore({
@@ -92,7 +91,7 @@ export default class MetaMetricsController {
       metaMetricsId: null,
       ...initState,
       fragments: {
-        ...persistedFragments,
+        ...initState?.fragments,
       },
     });
 
@@ -147,6 +146,19 @@ export default class MetaMetricsController {
    * @returns {MetaMetricsFunnel}
    */
   createEventFragment(options) {
+    if (!options.successEvent || !options.category) {
+      throw new Error(
+        `Must specify success event and category. Success event was: ${
+          options.event
+        }. Category was: ${options.category}. Payload keys were: ${Object.keys(
+          options,
+        )}. ${
+          typeof options.properties === 'object'
+            ? `Payload property keys were: ${Object.keys(options.properties)}`
+            : ''
+        }`,
+      );
+    }
     const { fragments } = this.store.getState();
 
     const id = generateUUID();
