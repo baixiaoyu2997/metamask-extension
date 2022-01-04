@@ -1349,16 +1349,13 @@ export default class MetamaskController extends EventEmitter {
       trackMetaMetricsPage: metaMetricsController.trackPage.bind(
         metaMetricsController,
       ),
-      createEventFragment: nodeify(
-        metaMetricsController.createEventFragment,
+      createEventFragment: metaMetricsController.createEventFragment.bind(
         metaMetricsController,
       ),
-      updateEventFragment: nodeify(
-        metaMetricsController.updateEventFragment,
+      updateEventFragment: metaMetricsController.updateEventFragment.bind(
         metaMetricsController,
       ),
-      finalizeEventFragment: nodeify(
-        metaMetricsController.finalizeEventFragment,
+      finalizeEventFragment: metaMetricsController.finalizeEventFragment.bind(
         metaMetricsController,
       ),
 
