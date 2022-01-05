@@ -13,7 +13,7 @@ jest.mock('../store/actions', () => ({
   createEventFragment: jest.fn(),
 }));
 
-jest.mock('./useMetaMetrics', () => ({
+jest.mock('./useMetricEvent', () => ({
   useMetaMetricsContext: jest.fn(() => ({ page: '/' })),
 }));
 

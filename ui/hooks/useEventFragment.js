@@ -1,12 +1,13 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { getEnvironmentType } from '../../app/scripts/lib/util';
 import { selectMatchingFragment } from '../selectors';
 import {
   finalizeEventFragment,
   createEventFragment,
   updateEventFragment,
 } from '../store/actions';
-import { useMetaMetricsContext } from './useMetaMetrics';
+import { useMetaMetricsContext } from './useMetricEvent';
 
 /**
  * Retrieves a fragment from memory or initializes new fragment if one does not
@@ -24,7 +25,8 @@ export function useEventFragment(existingId, fragmentOptions) {
 
   // In order to immediately return a created fragment, instead of waiting for
   // background state to update and find the newly created fragment, we have a
-  //
+  // state element that is updated with the fragmentId returned from the
+  // call into the background process.
   const [createdFragmentId, setCreatedFragmentId] = useState(undefined);
 
   // Select a matching fragment from state if one exists that matches the
@@ -47,7 +49,10 @@ export function useEventFragment(existingId, fragmentOptions) {
   useEffect(() => {
     if (fragment === undefined && createEventFragmentCalled.current === false) {
       createEventFragmentCalled.current = true;
-      createEventFragment(fragmentOptions).then((createdFragment) => {
+      createEventFragment({
+        ...fragmentOptions,
+        environmentType: getEnvironmentType(),
+      }).then((createdFragment) => {
         setCreatedFragmentId(createdFragment.id);
       });
     }
