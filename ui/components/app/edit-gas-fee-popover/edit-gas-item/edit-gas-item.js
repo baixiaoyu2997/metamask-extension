@@ -67,9 +67,13 @@ const EditGasItem = ({ priorityLevel }) => {
       maxFeePerGas = maxFeePerGasValue;
       maxPriorityFeePerGas = maxPriorityFeePerGasValue;
     } else if (advancedGasFeeValues) {
-      maxFeePerGas =
-        gasFeeEstimates.estimatedBaseFee *
-        parseFloat(advancedGasFeeValues.maxBaseFee);
+      const { maxBaseFeeGWEI, maxBaseFeeMultiplier } = advancedGasFeeValues;
+      if (maxBaseFeeGWEI) {
+        maxFeePerGas = maxBaseFeeGWEI;
+      } else if (maxBaseFeeMultiplier) {
+        maxFeePerGas =
+          gasFeeEstimates.estimatedBaseFee * parseFloat(maxBaseFeeMultiplier);
+      }
       maxPriorityFeePerGas = advancedGasFeeValues.priorityFee;
     }
   }

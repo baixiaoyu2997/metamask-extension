@@ -67,7 +67,8 @@ const renderComponent = ({
       featureFlags: { advancedInlineGas: true },
       gasFeeEstimates: MOCK_FEE_ESTIMATE,
       advancedGasFee: {
-        maxBaseFee: '1.5',
+        maxBaseFeeMultiplier: '1.5',
+        maxBaseFeeGWEI: null,
         priorityFee: '2',
       },
     },
